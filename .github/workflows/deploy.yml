@@ -17,6 +17,11 @@ jobs:
               with:
                   credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
 
+            - id: 'delete-existing'
+              name: 'Eliminando servicio existente'
+              run: |
+                    gcloud run services delete api --quiet || true
+
             - id: deploy
               name: 'Desplegando en GCP'
               uses: 'google-github-actions/deploy-cloud-functions@v3'
@@ -25,4 +30,3 @@ jobs:
                   name: "api"
                   runtime: "python311"
                   entry_point: "hello_http"
-                  
